@@ -25,9 +25,27 @@ python .\scripts\load_data.py
 
 A carga só roda com as tabelas vazias. Para recomeçar do zero (apaga o banco): `docker compose down -v`, `docker compose up -d` e `python .\scripts\setup_db.py`.
 
+## Prevenção
+
+As propostas estão em [PREVENCAO.md](PREVENCAO.md). Para aplicar a parte do banco, depois da carga:
+
+```bash
+python .\scripts\aplicar_prevencao.py
+```
+
+Depois disso o `load_data.py` não funciona mais, porque foi feito para o schema original. Os pagamentos passam a entrar por:
+
+```bash
+python .\scripts\importar_pagamentos.py .\dados\pagamentos.json
+```
+
+Os testes do importador só rodam com o venv ativo e o Postgres no ar; sem isso são pulados.
+
 ## Uso de IA
 
-Usei o Claude Code (Claude Sonnet 5.5, da Anthropic) no `DIAGNOSTICO.md` e na limpeza.
+Usei o Claude Code (Claude Sonnet 5.5, da Anthropic) no `DIAGNOSTICO.md`, na limpeza e na prevenção.
+
+Na prevenção, a IA escreveu o `PREVENCAO.md`, o `sql/prevencao.sql` e o `aplicar_prevencao.py`, e testou a migração e o script em cópias temporárias do banco. Também escreveu `importar_pagamentos.py` e os testes dele em banco temporário; um dos testes pegou um erro em que a pendência sumia, corrigido em seguida.
 
 Na limpeza, a IA escreveu `clean_data.py` e os testes a partir das regras do diagnóstico. A conferência foi rodar os testes e comparar os totais por processo com a tabela do diagnóstico. Como os dois vêm da mesma análise, isso confirma a consistência, não as premissas. A IA também escreveu `load_data.py` e o testou em um banco recriado: 6 precatórios, 8 pagamentos, total pago de 34.200,50 e segunda carga recusada.
 
