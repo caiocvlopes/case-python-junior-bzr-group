@@ -1,3 +1,9 @@
+## Entregas
+
+- [DIAGNOSTICO.md](DIAGNOSTICO.md): problemas encontrados
+- [PREVENCAO.md](PREVENCAO.md): mudanças no processo, no script e no banco
+- [DUVIDAS.md](DUVIDAS.md): perguntas ao tribunal e à operação
+
 ## Setup inicial (ambiente virtual + db)
 ```bash
 docker compose up -d
@@ -43,7 +49,9 @@ Os testes do importador só rodam com o venv ativo e o Postgres no ar; sem isso 
 
 ## Uso de IA
 
-Usei o Claude Code (Claude Sonnet 5.5, da Anthropic) no `DIAGNOSTICO.md`, na limpeza e na prevenção.
+Usei o Claude Code (Claude Sonnet 5.5, da Anthropic) no `DIAGNOSTICO.md`, na limpeza, na prevenção e nas dúvidas.
+
+Nas dúvidas, a IA redigiu o `DUVIDAS.md` a partir do diagnóstico e das premissas do `clean_data.py`.
 
 Na prevenção, a IA escreveu o `PREVENCAO.md`, o `sql/prevencao.sql` e o `aplicar_prevencao.py`, e testou a migração e o script em cópias temporárias do banco. Também escreveu `importar_pagamentos.py` e os testes dele em banco temporário; um dos testes pegou um erro em que a pendência sumia, corrigido em seguida.
 
